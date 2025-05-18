@@ -88,4 +88,15 @@ async def whatsapp_webhook(request: Request):
         await manager.broadcast(f"WhatsApp ({from_number}): {body}")
     return "OK"
 
- 
+ #whatsapp status callback
+@app.post("/status_callback")
+async def status_callback(request: Request):
+    form = await request.form()
+    message_sid = form.get("MessageSid")
+    status = form.get("MessageStatus")
+    to_number = form.get("To")
+    from_number = form.get("From")
+
+    if message_sid and status:
+        await manager.broadcast(f"Status update for {message_sid}: {status} from {from_number} to {to_number}")
+    return "OK"
