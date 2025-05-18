@@ -1,0 +1,4 @@
+fastapi
+twilio
+uvicorn[standard]
+python-multipart
